@@ -1,0 +1,6 @@
+{
+  "appId": "com.uru.uruchat",
+  "appName": "UruChat",
+  "webDir": "www",
+  "server": { "androidScheme": "http", "cleartext": true }
+}

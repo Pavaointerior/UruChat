@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-tema="claro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UruChat</title>
+<script>
+(function(){try{var t=localStorage.getItem("uruchat_tema");
+if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"escuro":"claro";
+document.documentElement.dataset.tema=t;}catch(e){}})();
+</script>
+<link rel="stylesheet" href="css/tema.css">
+</head>
+<body class="esq-aberta dir-aberta">
+<header class="topo">
+  <button id="btn-esq" class="btn-i" aria-label="Mostrar ou esconder a lateral" aria-pressed="true">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="14" height="12" rx="2"/><line x1="7" y1="3" x2="7" y2="15"/></svg>
+  </button>
+  <h1>UruChat</h1>
+  <button id="btn-tema" class="btn-i" aria-label="Alternar claro e escuro">🌙</button>
+  <button id="btn-dir" class="btn-i" aria-label="Mostrar ou esconder o painel" aria-pressed="true">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="14" height="12" rx="2"/><line x1="11" y1="3" x2="11" y2="15"/></svg>
+  </button>
+</header>
+
+<div class="corpo">
+  <aside class="lateral">
+    <p class="titulo-sec">Modos</p>
+    <button class="item ativo">🎵 Professor de música</button>
+    <button class="item">🛠️ Ajudante dos apps</button>
+    <button class="item">💬 Conversa</button>
+    <p class="titulo-sec" style="margin-top:14px">Histórico</p>
+    <p class="vazio">Nenhuma conversa ainda.</p>
+  </aside>
+
+  <section class="centro">
+    <main class="mensagens" id="mensagens">
+      <div class="balao agente">Olá! Esta é a tela de chat do UruChat.</div>
+      <div class="balao voce">Exemplo de mensagem minha.</div>
+    </main>
+    <div class="entrada">
+      <input id="campo" type="text" placeholder="Digite sua mensagem...">
+      <button class="enviar" id="btn-enviar" aria-label="Enviar">➤</button>
+    </div>
+  </section>
+
+  <aside class="painel">
+    <div class="abas">
+      <button class="aba ativa" data-aba="atividade">Atividade</button>
+      <button class="aba" data-aba="previa">Prévia</button>
+    </div>
+
+    <div class="conteudo ativo" id="aba-atividade">
+      <p class="titulo-sec">Agente</p>
+      <p class="vazio">O agente ainda não fez nada.</p>
+      <p class="titulo-sec">Tokens</p>
+      <p class="vazio">0 nesta conversa</p>
+    </div>
+
+    <div class="conteudo" id="aba-previa">
+      <div class="linha">
+        <button class="btn" id="modo-endereco">Endereço</button>
+        <button class="btn" id="modo-codigo">Código</button>
+      </div>
+      <div class="linha" id="linha-endereco">
+        <input id="campo-url" type="text" placeholder="http://localhost:porta" autocapitalize="off" autocorrect="off">
+        <button class="btn primario" id="btn-ir">Ir</button>
+      </div>
+      <textarea class="codigo" id="campo-codigo" placeholder="Cole aqui um HTML para ver como fica" hidden></textarea>
+      <div class="linha" id="linha-mostrar" hidden>
+        <button class="btn primario" id="btn-mostrar">Mostrar</button>
+      </div>
+      <iframe class="moldura" id="moldura" sandbox="allow-scripts allow-forms"></iframe>
+    </div>
+  </aside>
+</div>
+
+<script src="js/ajustes.js"></script>
+<script src="js/paineis.js"></script>
+<script src="js/modos.js"></script>
+<script src="js/chat.js"></script>
+</body>
+</html>
