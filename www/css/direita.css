@@ -1,0 +1,20 @@
+.direita {
+  width: 260px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  background: var(--superficie);
+  border-left: 1px solid var(--borda);
+  padding: 10px;
+  gap: 8px;
+}
+
+.info-linha {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--texto-suave);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.info-mono { font-family: var(--mono); font-size: 0.76rem; }

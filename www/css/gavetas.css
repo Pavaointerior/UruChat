@@ -1,0 +1,4 @@
+.gaveta-btn { height: 30px; padding: 0 8px; font: inherit; font-size: 0.78rem; color: var(--texto-suave); background: var(--superficie-2); border: 1px solid var(--borda); border-radius: 7px; cursor: pointer; }
+.gaveta-btn:hover { color: var(--texto); border-color: var(--destaque); }
+.esquerda.recolhida { display: none; }
+.direita.recolhida { display: none; }

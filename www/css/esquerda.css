@@ -1,0 +1,121 @@
+.esquerda {
+  width: 240px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  background: var(--superficie);
+  border-right: 1px solid var(--borda);
+  padding: 10px;
+}
+
+.esq-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.titulo-sec {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--texto-suave);
+}
+
+.lista-sessoes {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sessao-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px 4px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.sessao-item.ativa {
+  background: var(--superficie-2);
+  border-color: var(--borda);
+}
+
+.sessao-abrir {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 4px;
+  font: inherit;
+  color: var(--texto);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.sessao-tit {
+  width: 100%;
+  font-size: 0.84rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sessao-modo { font-size: 0.7rem; color: var(--texto-suave); }
+
+.sessao-input {
+  flex: 1;
+  min-width: 0;
+  height: 28px;
+  padding: 0 6px;
+  font: inherit;
+  font-size: 0.82rem;
+  color: var(--texto);
+  background: var(--fundo);
+  border: 1px solid var(--destaque);
+  border-radius: 6px;
+}
+
+.sessao-btn {
+  padding: 4px 5px;
+  font: inherit;
+  font-size: 0.76rem;
+  color: var(--texto-suave);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.sessao-btn:hover { color: var(--destaque); }
+
+.esq-rodape {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--borda);
+}
+
+.btn-cfg-esq {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 10px;
+  font: inherit;
+  font-size: 0.84rem;
+  color: var(--texto);
+  background: var(--superficie-2);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+
+.modo-selo { font-size: 0.72rem; color: var(--destaque); font-weight: 600; }

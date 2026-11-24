@@ -1,83 +1,154 @@
-<!DOCTYPE html>
-<html lang="pt-br" data-tema="claro">
+<!doctype html>
+<html lang="pt-BR" data-tema="escuro">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>UruChat</title>
-<script>
-(function(){try{var t=localStorage.getItem("uruchat_tema");
-if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"escuro":"claro";
-document.documentElement.dataset.tema=t;}catch(e){}})();
-</script>
-<link rel="stylesheet" href="css/tema.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UruChat</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/esquerda.css">
+  <link rel="stylesheet" href="css/centro.css">
+  <link rel="stylesheet" href="css/direita.css">
+  <link rel="stylesheet" href="css/gavetas.css">
+  <link rel="stylesheet" href="css/modal.css">
 </head>
-<body class="esq-aberta dir-aberta">
-<header class="topo">
-  <button id="btn-esq" class="btn-i" aria-label="Mostrar ou esconder a lateral" aria-pressed="true">
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="14" height="12" rx="2"/><line x1="7" y1="3" x2="7" y2="15"/></svg>
-  </button>
-  <h1>UruChat</h1>
-  <button id="btn-tema" class="btn-i" aria-label="Alternar claro e escuro">🌙</button>
-  <button id="btn-dir" class="btn-i" aria-label="Mostrar ou esconder o painel" aria-pressed="true">
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="14" height="12" rx="2"/><line x1="11" y1="3" x2="11" y2="15"/></svg>
-  </button>
-</header>
-
-<div class="corpo">
-  <aside class="lateral">
-    <p class="titulo-sec">Modos</p>
-    <button class="item ativo">🎵 Professor de música</button>
-    <button class="item">🛠️ Ajudante dos apps</button>
-    <button class="item">💬 Conversa</button>
-    <p class="titulo-sec" style="margin-top:14px">Histórico</p>
-    <p class="vazio">Nenhuma conversa ainda.</p>
-  </aside>
-
-  <section class="centro">
-    <main class="mensagens" id="mensagens">
-      <div class="balao agente">Olá! Esta é a tela de chat do UruChat.</div>
-      <div class="balao voce">Exemplo de mensagem minha.</div>
-    </main>
-    <div class="entrada">
-      <input id="campo" type="text" placeholder="Digite sua mensagem...">
-      <button class="enviar" id="btn-enviar" aria-label="Enviar">➤</button>
-    </div>
-  </section>
-
-  <aside class="painel">
-    <div class="abas">
-      <button class="aba ativa" data-aba="atividade">Atividade</button>
-      <button class="aba" data-aba="previa">Prévia</button>
-    </div>
-
-    <div class="conteudo ativo" id="aba-atividade">
-      <p class="titulo-sec">Agente</p>
-      <p class="vazio">O agente ainda não fez nada.</p>
-      <p class="titulo-sec">Tokens</p>
-      <p class="vazio">0 nesta conversa</p>
-    </div>
-
-    <div class="conteudo" id="aba-previa">
-      <div class="linha">
-        <button class="btn" id="modo-endereco">Endereço</button>
-        <button class="btn" id="modo-codigo">Código</button>
+<body>
+  <div class="app">
+    <header class="topo">
+      <div class="topo-acoes">
+        <button type="button" class="gaveta-btn" id="btn-rec-esq" title="Recolher/abrir painel esquerdo">◧</button>
+        <span class="marca">UruChat</span>
       </div>
-      <div class="linha" id="linha-endereco">
-        <input id="campo-url" type="text" placeholder="http://localhost:porta" autocapitalize="off" autocorrect="off">
-        <button class="btn primario" id="btn-ir">Ir</button>
+      <div class="topo-acoes">
+        <button type="button" class="btn-icone" id="btn-tema" title="Tema">☀️</button>
+        <button type="button" class="btn-icone" id="btn-ajustes-topo" title="Configurações">⚙️</button>
+        <button type="button" class="gaveta-btn" id="btn-rec-dir" title="Recolher/abrir painel direito">◨</button>
       </div>
-      <textarea class="codigo" id="campo-codigo" placeholder="Cole aqui um HTML para ver como fica" hidden></textarea>
-      <div class="linha" id="linha-mostrar" hidden>
-        <button class="btn primario" id="btn-mostrar">Mostrar</button>
-      </div>
-      <iframe class="moldura" id="moldura" sandbox="allow-scripts allow-forms"></iframe>
+    </header>
+    <div class="corpo">
+      <aside class="esquerda" id="painel-esq">
+        <div class="esq-topo">
+          <p class="titulo-sec">Conversas</p>
+          <button type="button" class="btn-mini" id="btn-nova">+ Nova</button>
+        </div>
+        <div class="lista-sessoes" id="lista-sessoes"></div>
+        <div class="esq-rodape">
+          <button type="button" class="btn-cfg-esq" id="btn-cfg-esq">
+            <span>⚙️ Configurações</span>
+            <span class="modo-selo" id="selo-modo">Acesso total</span>
+          </button>
+        </div>
+      </aside>
+      <main class="centro">
+        <div class="mensagens" id="mensagens"></div>
+        <div class="entrada">
+          <div class="barra-digitar" id="barra-digitar">
+            <div class="preview-anexo" id="preview-anexo" hidden></div>
+            <textarea class="campo" id="campo" rows="1" placeholder="Digite sua mensagem..."></textarea>
+            <div class="linha-acoes">
+              <div class="seletor" id="seletor-modelo">
+                <button type="button" class="seletor-btn" id="seletor-btn" aria-haspopup="listbox" aria-expanded="false" title="Trocar de modelo">
+                  <span class="seletor-rotulo" id="seletor-rotulo">Modelo</span>
+                  <span class="seletor-seta" aria-hidden="true">▾</span>
+                </button>
+                <ul class="seletor-lista" id="seletor-lista" role="listbox" aria-label="Modelos disponíveis" hidden></ul>
+              </div>
+              <div class="botoes-entrada">
+                <button type="button" class="btn-anexar" id="btn-anexar" title="Anexar foto ou arquivo" aria-label="Anexar foto ou arquivo">
+                  <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                </button>
+                <button type="button" class="btn-mic" id="btn-mic" title="Falar" aria-label="Falar">
+                  <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                </button>
+                <button type="button" class="btn-enviar" id="btn-enviar" title="Enviar" aria-label="Enviar">
+                  <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </div>
+            </div>
+            <input type="file" id="inp-anexo" accept="image/*," hidden multiple>
+          </div>
+        </div>
+      </main>
+      <aside class="direita" id="painel-dir">
+        <p class="titulo-sec">Atividade</p>
+        <p class="info-linha" id="dir-status">Pronto.</p>
+        <p class="info-linha info-mono" id="dir-acoes"></p>
+        <p class="titulo-sec">Tokens</p>
+        <p class="info-linha" id="dir-tokens">0 nesta conversa</p>
+        <p class="info-linha info-mono" id="dir-cache"></p>
+      </aside>
     </div>
-  </aside>
-</div>
-
-<script src="js/ajustes.js"></script>
-<script src="js/paineis.js"></script>
-<script src="js/modos.js"></script>
-<script src="js/chat.js"></script>
+  </div>
+  <div class="modal-fundo" id="modal-cfg" hidden>
+    <div class="modal">
+      <div class="modal-topo">
+        <strong>Configurações</strong>
+        <button type="button" class="btn-mini" id="fechar-modal">✕</button>
+      </div>
+      <div class="abas-modal">
+        <button type="button" class="aba-btn ativa" data-aba="modos">Modos</button>
+        <button type="button" class="aba-btn" data-aba="api">API</button>
+        <button type="button" class="aba-btn" data-aba="tela">Tela</button>
+      </div>
+      <div class="painel-modal" id="painel-modos">
+        <div class="grade-modos">
+          <button type="button" class="modo-card ativa" data-modo="total">
+            <div class="modo-card-tit">🔓 Acesso total</div>
+            <div class="modo-card-desc">Lê, cria e edita arquivos na árvore permitida (com backup) e pesquisa na internet.</div>
+          </button>
+          <button type="button" class="modo-card" data-modo="medio">
+            <div class="modo-card-tit">👁️ Médio</div>
+            <div class="modo-card-desc">Apenas leitura dos arquivos permitidos e pesquisa na internet, sem alterar código.</div>
+          </button>
+          <button type="button" class="modo-card" data-modo="minimo">
+            <div class="modo-card-tit">💬 Mínimo</div>
+            <div class="modo-card-desc">Somente conversa e pesquisa na internet, sem acesso aos arquivos locais.</div>
+          </button>
+        </div>
+      </div>
+      <div class="painel-modal" id="painel-api" hidden>
+        <label class="campo-form">URL da API<input id="cfg-url" type="text" placeholder="https://api.deepseek.com/v1"></label>
+        <label class="campo-form">Modelo<select id="cfg-modelo"></select></label>
+        <label class="campo-form">Raciocínio<select id="cfg-pensamento">
+          <option value="1">Ligado (mais lento, mais preciso)</option>
+          <option value="0">Desligado (mais rápido e barato)</option>
+        </select></label>
+        <label class="campo-form">Esforço do raciocínio<select id="cfg-esforco">
+          <option value="low">Baixo</option>
+          <option value="high">Médio</option>
+          <option value="max">Máximo</option>
+        </select></label>
+        <label class="campo-form">Máximo de tokens na resposta<select id="cfg-max-tokens">
+          <option value="0">Sem limite</option>
+          <option value="2048">2.048</option>
+          <option value="4096">4.096</option>
+          <option value="8192">8.192</option>
+          <option value="16384">16.384</option>
+          <option value="32768">32.768</option>
+        </select></label>
+        <label class="campo-form">Resposta em tempo real<select id="cfg-stream">
+          <option value="1">Ligada (o texto aparece aos poucos)</option>
+          <option value="0">Desligada (o texto chega de uma vez)</option>
+        </select></label>
+        <label class="campo-form">Chave API <span id="cfg-status"></span><input id="cfg-chave" type="password" placeholder="sk-..."></label>
+        <div class="acoes-form"><span></span><button type="button" class="btn primario" id="salvar-api">Salvar</button></div>
+      </div>
+      <div class="painel-modal" id="painel-tela" hidden>
+        <label class="campo-form">Tamanho da fonte (<span id="lbl-fonte">15px</span>)<input id="rng-fonte" type="range" min="12" max="24" step="1" value="15"></label>
+        <label class="campo-form">Espaço entre falas (<span id="lbl-espaco">2.8em</span>)<input id="rng-espaco" type="range" min="1.0" max="4.5" step="0.2" value="2.8"></label>
+        <div class="acoes-form"><button type="button" class="btn" id="reset-tela">Padrão</button><button type="button" class="btn primario" id="concluir-tela">Concluir</button></div>
+      </div>
+    </div>
+  </div>
+  <script src="js/modos.js"></script>
+  <script src="js/modelos.js"></script>
+  <script src="js/gavetas.js"></script>
+  <script src="js/sessoes.js"></script>
+  <script src="js/direita.js"></script>
+  <script src="js/voz.js"></script>
+  <script src="js/anexos.js"></script>
+  <script src="js/seletor_modelos.js"></script>
+  <script src="js/reconectar.js"></script>
+  <script src="js/centro.js"></script>
+  <script src="js/modal.js"></script>
 </body>
 </html>
